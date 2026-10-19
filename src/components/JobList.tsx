@@ -25,7 +25,7 @@ export const JobList: React.FC<JobListProps> = ({
       // Filter by Status or Urgent Priority
       let matchesCategory = true;
       if (currentFilter === "Urgent") {
-        matchesCategory = job.priority === "Urgent";
+        matchesCategory = job.priority === "Urgent" && job.status !== "Completed";
       } else if (currentFilter !== "All") {
         matchesCategory = job.status === currentFilter;
       }
@@ -52,7 +52,7 @@ export const JobList: React.FC<JobListProps> = ({
 
   const getTabCount = (tab: StatusFilter) => {
     if (tab === "All") return jobs.length;
-    if (tab === "Urgent") return jobs.filter((j) => j.priority === "Urgent").length;
+    if (tab === "Urgent") return jobs.filter((j) => j.priority === "Urgent" && j.status !== "Completed").length;
     return jobs.filter((j) => j.status === tab).length;
   };
 

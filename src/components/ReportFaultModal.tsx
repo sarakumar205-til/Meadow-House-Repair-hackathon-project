@@ -142,6 +142,7 @@ export const ReportFaultModal: React.FC<ReportFaultModalProps> = ({
               id="fault-description"
               ref={firstInputRef}
               rows={3}
+              style={{ resize: "none" }}
               className={`input-field ${errors.description ? "input-error" : ""}`}
               placeholder="e.g. Garden fence damaged by heavy wind"
               value={description}

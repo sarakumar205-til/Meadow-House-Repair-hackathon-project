@@ -19,7 +19,9 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
   onBack,
   onUpdateJob
 }) => {
-  const [selectedStatus, setSelectedStatus] = useState<JobStatus>(job.status);
+  const [selectedStatus, setSelectedStatus] = useState<JobStatus>(
+    job.status === "New" ? "In Progress" : job.status
+  );
   const [updateNote, setUpdateNote] = useState("");
   const [completionError, setCompletionError] = useState<string | null>(null);
 
@@ -58,10 +60,11 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
       note: trimmedNote.length > 0 ? trimmedNote : undefined
     };
 
-    // Update only the selected job, preserve earlier history
+    // Update only the selected job; mark done tasks as not urgent
     const updatedJob: MaintenanceJob = {
       ...job,
       status: selectedStatus,
+      priority: selectedStatus === "Completed" ? "Normal" : job.priority,
       latestNote: trimmedNote.length > 0 ? trimmedNote : job.latestNote,
       history: [...job.history, newHistoryEntry]
     };
@@ -87,7 +90,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
         </button>
         <div className="detail-top-badges">
           <span className="job-id-pill">{job.id}</span>
-          <PriorityBadge priority={job.priority} />
+          <PriorityBadge priority={isCompleted ? "Normal" : job.priority} />
           <StatusBadge status={job.status} />
         </div>
       </div>
@@ -127,7 +130,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               <div className="meta-box">
                 <span className="meta-box-label">Current Priority</span>
                 <span className="meta-box-value">
-                  <PriorityBadge priority={job.priority} />
+                  <PriorityBadge priority={isCompleted ? "Normal" : job.priority} />
                 </span>
               </div>
             </div>
@@ -167,7 +170,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
               <div className="form-group">
                 <label className="form-label">Select Repair Status</label>
                 <div className="status-selector-grid" role="radiogroup" aria-label="Change status">
-                  {(["New", "In Progress", "Completed"] as JobStatus[]).map((st) => {
+                  {(["In Progress", "Completed"] as JobStatus[]).map((st) => {
                     const isSelected = selectedStatus === st;
                     return (
                       <button
@@ -198,6 +201,7 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
                 <textarea
                   id="update-note"
                   rows={3}
+                  style={{ resize: "none" }}
                   className={`input-field ${completionError ? "input-error" : ""}`}
                   placeholder={
                     selectedStatus === "Completed"

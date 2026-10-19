@@ -564,6 +564,11 @@ body {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+textarea.input-field {
+  resize: none !important;
+  min-height: 84px;
+}
+
 .input-field:focus {
   border-color: #dc2626;
   outline: none;
@@ -922,8 +927,8 @@ body {
 /* Status Selector in Job Detail */
 .status-selector-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .status-select-btn {

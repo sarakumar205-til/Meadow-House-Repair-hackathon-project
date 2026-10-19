@@ -19,7 +19,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onOpenJob }) => {
           <span className="home-tag">{job.home}</span>
         </div>
         <div className="job-card-badges">
-          <PriorityBadge priority={job.priority} />
+          <PriorityBadge priority={job.status === "Completed" ? "Normal" : job.priority} />
           <StatusBadge status={job.status} />
         </div>
       </div>

@@ -17,7 +17,7 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
   const newCount = jobs.filter((j) => j.status === "New").length;
   const inProgressCount = jobs.filter((j) => j.status === "In Progress").length;
   const completedCount = jobs.filter((j) => j.status === "Completed").length;
-  const urgentCount = jobs.filter((j) => j.priority === "Urgent").length;
+  const urgentCount = jobs.filter((j) => j.priority === "Urgent" && j.status !== "Completed").length;
 
   const cards = [
     {
