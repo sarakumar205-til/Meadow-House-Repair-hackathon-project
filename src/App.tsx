@@ -109,4 +109,4 @@ export const App: React.FC = () => {
       <Toast toast={toast} onDismiss={() => setToast(null)} />
     </div>
   );
-};\n
+};

@@ -43,4 +43,4 @@ export function validateCompletionNote(note: string): {
     };
   }
   return { isValid: true };
-}\n
+}

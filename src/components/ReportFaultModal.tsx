@@ -238,4 +238,4 @@ export const ReportFaultModal: React.FC<ReportFaultModalProps> = ({
       </div>
     </div>
   );
-};\n
+};

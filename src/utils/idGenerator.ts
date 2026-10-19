@@ -24,4 +24,4 @@ export function generateJobId(existingJobs: MaintenanceJob[] = []): string {
  */
 export function generateHistoryId(): string {
   return `HIST-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
-}\n
+}

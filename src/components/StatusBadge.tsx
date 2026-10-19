@@ -31,4 +31,4 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
       <span>New</span>
     </span>
   );
-};\n
+};

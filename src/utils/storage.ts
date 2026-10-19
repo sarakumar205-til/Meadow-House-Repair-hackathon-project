@@ -60,4 +60,4 @@ export function clearJobsStorage(): void {
   } catch (error) {
     console.error("Failed to clear localStorage:", error);
   }
-}\n
+}

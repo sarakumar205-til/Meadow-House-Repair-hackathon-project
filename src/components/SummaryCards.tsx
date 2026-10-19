@@ -81,4 +81,4 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({
       </div>
     </section>
   );
-};\n
+};

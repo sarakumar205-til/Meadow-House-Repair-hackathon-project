@@ -161,4 +161,4 @@ git push -u origin main
 2. Click **Add New Project**, select `meadow-house-repairs`, and click **Deploy**.
 3. Your live URL will be ready in under 60 seconds.
 
-> **Note on localStorage**: Browser data is stored locally on each device and browser profile. It does not synchronize across different computers, making each device independent for judging tests.\n
+> **Note on localStorage**: Browser data is stored locally on each device and browser profile. It does not synchronize across different computers, making each device independent for judging tests.

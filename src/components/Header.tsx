@@ -53,4 +53,4 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
     </header>
   );
-};\n
+};

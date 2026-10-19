@@ -61,4 +61,4 @@ export const JobCard: React.FC<JobCardProps> = ({ job, onOpenJob }) => {
       </div>
     </article>
   );
-};\n
+};

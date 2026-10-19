@@ -1,13 +1,30 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { validateReportForm, validateCompletionNote } from "../src/utils/validation";
-import { generateJobId, generateHistoryId } from "../src/utils/idGenerator";
-import { MaintenanceJob, HistoryEntry } from "../src/types/job";
+import { validateReportForm, validateCompletionNote } from "../utils/validation";
+import { generateJobId, generateHistoryId } from "../utils/idGenerator";
+import { MaintenanceJob, HistoryEntry } from "../types/job";
 import {
-  STORAGE_KEY,
   loadJobsFromStorage,
-  saveJobsToStorage,
-  clearJobsStorage
-} from "../src/utils/storage";
+  saveJobsToStorage
+} from "../utils/storage";
+
+// Simple in-memory localStorage polyfill for Node.js test environment
+const storageMock = (() => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: (key: string) => store[key] || null,
+    setItem: (key: string, value: string) => { store[key] = String(value); },
+    removeItem: (key: string) => { delete store[key]; },
+    clear: () => { store = {}; }
+  };
+})();
+
+// Attach to globalThis if not defined
+if (typeof globalThis.localStorage === "undefined" || !globalThis.localStorage) {
+  Object.defineProperty(globalThis, "localStorage", {
+    value: storageMock,
+    writable: true
+  });
+}
 
 describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
   beforeEach(() => {
@@ -43,7 +60,7 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
     };
 
     expect(job.home).toBe("Meadow House");
-    expect(job.id).toMatch(/^MH-\\d+$/);
+    expect(job.id).toMatch(/^MH-\d+$/);
     expect(job.priority).toBe("Urgent");
     expect(job.status).toBe("New");
     expect(job.history.length).toBe(1);
@@ -52,12 +69,10 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
 
   // M02 — Reject a missing description (8 marks)
   it("M02: rejects empty description and spaces-only description", () => {
-    // Empty
     const emptyVal = validateReportForm("", "Alex Morgan");
     expect(emptyVal.isValid).toBe(false);
     expect(emptyVal.errors.description).toBeDefined();
 
-    // Spaces only
     const spacesVal = validateReportForm("     ", "Alex Morgan");
     expect(spacesVal.isValid).toBe(false);
     expect(spacesVal.errors.description).toBeDefined();
@@ -65,12 +80,10 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
 
   // M03 — Reject a missing reporter (8 marks)
   it("M03: rejects empty reporter and spaces-only reporter", () => {
-    // Empty
     const emptyVal = validateReportForm("Garden fence damaged", "");
     expect(emptyVal.isValid).toBe(false);
     expect(emptyVal.errors.reporter).toBeDefined();
 
-    // Spaces only
     const spacesVal = validateReportForm("Garden fence damaged", "    ");
     expect(spacesVal.isValid).toBe(false);
     expect(spacesVal.errors.reporter).toBeDefined();
@@ -130,7 +143,6 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
 
     let jobs = [fenceJob, lightJob];
 
-    // Update only the fence job
     const updatedFence: MaintenanceJob = {
       ...fenceJob,
       status: "In Progress",
@@ -141,8 +153,6 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
 
     expect(jobs[0].status).toBe("In Progress");
     expect(jobs[0].latestNote).toBe("Temporary barrier fitted");
-
-    // Kitchen light job remains completely unchanged
     expect(jobs[1].status).toBe("New");
     expect(jobs[1].latestNote).toBeUndefined();
     expect(jobs[1].description).toBe("Kitchen light flickering");
@@ -247,7 +257,7 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
     expect(completedJob.status).toBe("Completed");
     expect(completedJob.latestNote).toBe("Fence repaired and checked");
     expect(completedJob.history.length).toBe(3);
-    expect(completedJob.history.map((h) => h.status)).toEqual(["New", "In Progress", "Completed"]);
+    expect(completedJob.history.map((h: HistoryEntry) => h.status)).toEqual(["New", "In Progress", "Completed"]);
   });
 
   // M09 — Retain saved work after refresh (8 marks)
@@ -308,8 +318,7 @@ describe("Meadow House Repairs - Judging Test Suite (M01 - M10)", () => {
       history: []
     };
 
-    // The literal characters remain intact
     expect(job.description).toBe("<b>check gate</b>");
     expect(job.latestNote).toBe("<b>check gate</b>");
   });
-});\n
+});

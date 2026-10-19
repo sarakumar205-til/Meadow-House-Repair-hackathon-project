@@ -32,4 +32,4 @@ export interface ValidationErrors {
   completionNote?: string;
 }
 
-export type StatusFilter = "All" | JobStatus | "Urgent";\n
+export type StatusFilter = "All" | JobStatus | "Urgent";

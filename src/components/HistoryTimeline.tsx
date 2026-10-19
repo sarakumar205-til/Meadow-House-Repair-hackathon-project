@@ -43,4 +43,4 @@ export const HistoryTimeline: React.FC<HistoryTimelineProps> = ({ history }) => 
       })}
     </div>
   );
-};\n
+};

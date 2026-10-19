@@ -35,4 +35,4 @@ export function formatDateOnly(isoString: string): string {
   } catch {
     return isoString;
   }
-}\n
+}

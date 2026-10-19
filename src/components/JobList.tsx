@@ -2,7 +2,6 @@ import React, { useState, useMemo } from "react";
 import { MaintenanceJob, StatusFilter } from "../types/job";
 import { JobCard } from "./JobCard";
 import { EmptyState } from "./EmptyState";
-import { WrenchIcon } from "./Icons";
 
 interface JobListProps {
   jobs: MaintenanceJob[];
@@ -110,4 +109,4 @@ export const JobList: React.FC<JobListProps> = ({
       )}
     </div>
   );
-};\n
+};

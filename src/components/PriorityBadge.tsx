@@ -25,4 +25,4 @@ export const PriorityBadge: React.FC<PriorityBadgeProps> = ({ priority }) => {
       <span className="badge-text">Normal</span>
     </span>
   );
-};\n
+};

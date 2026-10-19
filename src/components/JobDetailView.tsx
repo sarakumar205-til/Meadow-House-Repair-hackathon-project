@@ -245,4 +245,4 @@ export const JobDetailView: React.FC<JobDetailViewProps> = ({
       </div>
     </div>
   );
-};\n
+};
