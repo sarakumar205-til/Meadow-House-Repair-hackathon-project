@@ -50,12 +50,19 @@ export const JobList: React.FC<JobListProps> = ({
 
   const filterTabs: StatusFilter[] = ["All", "New", "In Progress", "Completed", "Urgent"];
 
+  const getTabCount = (tab: StatusFilter) => {
+    if (tab === "All") return jobs.length;
+    if (tab === "Urgent") return jobs.filter((j) => j.priority === "Urgent").length;
+    return jobs.filter((j) => j.status === tab).length;
+  };
+
   return (
     <div className="job-list-container" role="region" aria-label="Maintenance Jobs List">
       <div className="job-list-controls">
         <div className="filter-tabs" role="tablist" aria-label="Filter jobs by status or urgency">
           {filterTabs.map((tab) => {
             const isSelected = currentFilter === tab;
+            const count = getTabCount(tab);
             return (
               <button
                 key={tab}
@@ -64,7 +71,10 @@ export const JobList: React.FC<JobListProps> = ({
                 className={`filter-tab ${isSelected ? "filter-tab-active" : ""}`}
                 onClick={() => onSelectFilter(tab)}
               >
-                {tab}
+                <span>{tab}</span>
+                <span className={`filter-tab-count ${isSelected ? "filter-tab-count-active" : ""}`} aria-hidden="true">
+                  {count}
+                </span>
               </button>
             );
           })}

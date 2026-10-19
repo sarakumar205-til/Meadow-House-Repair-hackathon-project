@@ -20,6 +20,12 @@ export const Header: React.FC<HeaderProps> = ({
             <HomeIcon size={24} className="text-white" />
           </div>
           <div>
+            <div className="header-meta-row">
+              <span className="estate-beacon" aria-label="Status: Meadow House Estate active facility">
+                <span className="beacon-dot" aria-hidden="true"></span>
+                <span>Meadow House Estate · Active Facility</span>
+              </span>
+            </div>
             <h1 className="header-title">Meadow House Repairs</h1>
             <p className="header-subtitle">
               Report maintenance faults, track repair progress, and record completion for Meadow House

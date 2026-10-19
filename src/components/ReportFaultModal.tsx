@@ -107,13 +107,16 @@ export const ReportFaultModal: React.FC<ReportFaultModalProps> = ({
             </h2>
             <p className="modal-subtitle">Log a maintenance issue for Meadow House</p>
           </div>
-          <button
-            onClick={onClose}
-            className="btn-icon"
-            aria-label="Close fault report modal"
-          >
-            <XIcon size={20} />
-          </button>
+          <div className="modal-header-actions">
+            <span className="kbd-badge" title="Press Escape to close" aria-hidden="true">ESC</span>
+            <button
+              onClick={onClose}
+              className="btn-icon"
+              aria-label="Close fault report modal"
+            >
+              <XIcon size={20} />
+            </button>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} noValidate className="modal-form">
